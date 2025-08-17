@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #212c48 0%, #3a1c4a 100%);
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+#game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+}

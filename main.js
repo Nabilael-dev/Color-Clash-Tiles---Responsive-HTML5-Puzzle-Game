@@ -450,3 +450,67 @@ function launchGame() {
 window.addEventListener('DOMContentLoaded', () => {
   launchGame();
 });
+findAllMatches() {
+    let matches = [];
+    let checked = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(false));
+
+    // Horizontal matches
+    for (let y = 0; y < GRID_SIZE; y++) {
+        let streak = 1;
+        for (let x = 1; x < GRID_SIZE; x++) {
+            let t1 = this.grid[y][x - 1], t2 = this.grid[y][x];
+            if (t1.tileColor === t2.tileColor) {
+                streak++;
+            } else {
+                if (streak >= 3) {
+                    for (let k = x - streak; k < x; k++) {
+                        if (!checked[y][k]) {
+                            matches.push({x: k, y: y, tile: this.grid[y][k]});
+                            checked[y][k] = true;
+                        }
+                    }
+                }
+                streak = 1;
+            }
+        }
+        if (streak >= 3) {
+            for (let k = GRID_SIZE - streak; k < GRID_SIZE; k++) {
+                if (!checked[y][k]) {
+                    matches.push({x: k, y: y, tile: this.grid[y][k]});
+                    checked[y][k] = true;
+                }
+            }
+        }
+    }
+
+    // Vertical matches
+    for (let x = 0; x < GRID_SIZE; x++) {
+        let streak = 1;
+        for (let y = 1; y < GRID_SIZE; y++) {
+            let t1 = this.grid[y - 1][x], t2 = this.grid[y][x];
+            if (t1.tileColor === t2.tileColor) {
+                streak++;
+            } else {
+                if (streak >= 3) {
+                    for (let k = y - streak; k < y; k++) {
+                        if (!checked[k][x]) {
+                            matches.push({x: x, y: k, tile: this.grid[k][x]});
+                            checked[k][x] = true;
+                        }
+                    }
+                }
+                streak = 1;
+            }
+        }
+        if (streak >= 3) {
+            for (let k = GRID_SIZE - streak; k < GRID_SIZE; k++) {
+                if (!checked[k][x]) {
+                    matches.push({x: x, y: k, tile: this.grid[k][x]});
+                    checked[k][x] = true;
+                }
+            }
+        }
+    }
+
+    return matches;
+}
